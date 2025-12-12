@@ -102,6 +102,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@prisma/client':
+        specifier: ^6.2.1
+        version: 6.19.1(prisma@6.19.1(typescript@5.9.2))(typescript@5.9.2)
       '@repo/database':
         specifier: workspace:*
         version: link:../../packages/database
@@ -136,6 +139,9 @@ importers:
       eslint:
         specifier: ^9.39.1
         version: 9.39.1(jiti@2.6.1)
+      prisma:
+        specifier: ^6.2.1
+        version: 6.19.1(typescript@5.9.2)
       typescript:
         specifier: 5.9.2
         version: 5.9.2

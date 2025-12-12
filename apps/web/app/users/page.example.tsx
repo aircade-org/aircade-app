@@ -1,6 +1,5 @@
 import { prisma, type User } from '@repo/database';
 
-// Server Component example
 export default async function UsersPage() {
   const users: User[] = await prisma.user.findMany({
     include: {
