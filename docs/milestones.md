@@ -25,7 +25,7 @@
 ### Shared Packages
 
 - [X] **[Shared]** Create `packages/database` with initial package.json
-- [\] **[Shared]** Create `packages/types` with initial package.json
+- [-] **[Shared]** Create `packages/types` with initial package.json
 - [X] **[Shared]** Create `packages/ui` stub package with package.json
 - [X] **[Shared]** Create `packages/eslint-config` with base, next, and nest configurations
 - [X] **[Shared]** Create `packages/typescript-config` with base, nextjs, and nestjs configurations
@@ -34,34 +34,34 @@
 ### Development Environment
 
 - [X] **[Shared]** Create `.gitignore` at root with Node, IDE, and environment file exclusions
-- [\] **[Shared]** Set up Prettier configuration for consistent code formatting
-- [\] **[Shared]** Configure ESLint to work with Prettier
-- [\] **[Shared]** Add pre-commit hooks with Husky for linting and formatting
+- [-] **[Shared]** Set up Prettier configuration for consistent code formatting
+- [-] **[Shared]** Configure ESLint to work with Prettier
+- [-] **[Shared]** Add pre-commit hooks with Husky for linting and formatting
 - [X] **[Shared]** Create `.nvmrc` or `.node-version` file specifying Node >= 18
 
 ### Documentation
 
 - [X] **[Shared]** Create root `README.md` with project overview and setup instructions
 - [X] **[Shared]** Document common commands (dev, build, lint, test) in README
-- [\] **[Shared]** Create `CONTRIBUTING.md` with development guidelines
+- [-] **[Shared]** Create `CONTRIBUTING.md` with development guidelines
 - [X] **[Shared]** Set up `.env.example` files for both apps
 
 ### CI/CD Pipeline
 
-- [\] **[Infra]** Set up GitHub Actions workflow for CI
-- [\] **[Infra]** Add job for dependency installation with pnpm caching
-- [\] **[Infra]** Add job for linting across all workspaces
-- [\] **[Infra]** Add job for type-checking across all workspaces
-- [\] **[Infra]** Add job for building all apps and packages
-- [\] **[Infra]** Configure CI to run on pull requests and main branch pushes
+- [-] **[Infra]** Set up GitHub Actions workflow for CI
+- [-] **[Infra]** Add job for dependency installation with pnpm caching
+- [-] **[Infra]** Add job for linting across all workspaces
+- [-] **[Infra]** Add job for type-checking across all workspaces
+- [-] **[Infra]** Add job for building all apps and packages
+- [-] **[Infra]** Configure CI to run on pull requests and main branch pushes
 
 ### Verification
 
-- [\] **[QA]** Verify `pnpm install` works correctly
-- [\] **[QA]** Verify `pnpm dev` starts both apps successfully
-- [\] **[QA]** Verify `pnpm build` builds all workspaces without errors
-- [\] **[QA]** Verify `pnpm lint` runs across all workspaces
-- [\] **[QA]** Verify CI pipeline passes on a test commit
+- [-] **[QA]** Verify `pnpm install` works correctly
+- [-] **[QA]** Verify `pnpm dev` starts both apps successfully
+- [-] **[QA]** Verify `pnpm build` builds all workspaces without errors
+- [-] **[QA]** Verify `pnpm lint` runs across all workspaces
+- [-] **[QA]** Verify CI pipeline passes on a test commit
 
 ---
 
