@@ -4,10 +4,10 @@
 
 ## Documentation
 
-- [Specification](https://github.com/aircade-org/aircade-doc/blob/main/specification.md)
-- [Milestone Roadmap](https://github.com/aircade-org/aircade-doc/blob/main/milstones.md)
-- [Technical Stack](https://github.com/aircade-org/aircade-doc/blob/main/technical-stack.md)
-- [OnBoarding](https://github.com/aircade-org/aircade-doc/blob/main/onboarding.md)
+- [Specification](./docs/specification.md)
+- [Milestone Roadmap](./docs/milstones.md)
+- [Technical Stack](./docs/technical-stack.md)
+- [OnBoarding](./docs/onboarding.md)
 
 ## What's inside?
 
