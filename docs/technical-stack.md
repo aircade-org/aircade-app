@@ -41,27 +41,27 @@ All workspaces are managed with **pnpm workspaces** and orchestrated by **Turbor
 - **Styling**: Tailwind CSS (recommended) or CSS Modules
 - **State Management**: React Context, Zustand, or React Query for server state
 - **WebSocket Client**: Socket.IO client for real-time controller/console communication
-- **Authentication**: NextAuth.js or custom session handling
+- **Authentication**: Custom JWT authentication with NestJS backend
 
 **Key responsibilities**:
 
 - Marketing pages (home, games catalog, info) with SEO-optimized SSR
 - Console UI (`/play`) for big-screen game sessions
 - Controller UI (`/join`) for mobile phone controls
-- Consumes REST/GraphQL APIs and WebSocket namespaces from the backend
+- Consumes REST APIs and WebSocket namespaces from the backend
 
 ### Backend (apps/api)
 
 - **Framework**: NestJS with TypeScript
 - **Real-time**: Socket.IO with NestJS WebSocket Gateways for bidirectional communication
-- **API Style**: REST or GraphQL (recommend REST for simplicity, GraphQL for complex queries)
+- **API Style**: REST APIs for all HTTP endpoints
 - **Authentication**: JWT tokens with Passport.js strategies (local, OAuth)
 - **Validation**: class-validator and class-transformer DTOs
 - **ORM**: Prisma Client (imported from `@repo/database` package)
 
 **Key responsibilities**:
 
-- HTTP APIs for authentication, game catalog, user profiles, subscriptions
+- REST APIs for authentication, game catalog, user profiles, subscriptions
 - WebSocket rooms for session lobbies and in-game real-time events
 - Session code generation and validation
 - Business logic orchestration and authorization
@@ -253,10 +253,10 @@ Each app maintains its own `.env` file, with shared database connection managed 
 **apps/web/.env**:
 
 ```txt
-NEXT_PUBLIC_API_URL=http://localhost:3001
-NEXT_PUBLIC_WS_URL=ws://localhost:3001
+NEXT_PUBLIC_API_URL=http://localhost:3000
+NEXT_PUBLIC_WS_URL=ws://localhost:3000
 NEXTAUTH_SECRET=your-secret
-NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_URL=http://localhost:3001
 ```
 
 **apps/api/.env**:
