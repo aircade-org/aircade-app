@@ -6,62 +6,62 @@
 
 ### Repository Structure
 
-- [ ] **[Shared]** Initialize project root with pnpm workspaces configuration
-- [ ] **[Shared]** Use `create-turbo` to scaffold the monorepo structure
-- [ ] **[Shared]** Configure `pnpm-workspace.yaml` with all workspace packages
-- [ ] **[Shared]** Set up root `package.json` with workspace scripts (dev, build, lint, test)
-- [ ] **[Shared]** Configure `turbo.json` with build, dev, lint, and type-check pipelines
+- [X] **[Shared]** Initialize project root with pnpm workspaces configuration
+- [X] **[Shared]** Use `create-turbo` to scaffold the monorepo structure
+- [X] **[Shared]** Configure `pnpm-workspace.yaml` with all workspace packages
+- [X] **[Shared]** Set up root `package.json` with workspace scripts (dev, build, lint, test)
+- [X] **[Shared]** Configure `turbo.json` with build, dev, lint, and type-check pipelines
 
 ### Application Setup
 
-- [ ] **[Frontend]** Create Next.js 16 application inside `apps/web` using App Router
-- [ ] **[Frontend]** Configure Next.js to run on port 3001
-- [ ] **[Frontend]** Set up basic `app/layout.tsx` and `app/page.tsx`
-- [ ] **[Backend]** Create NestJS application inside `apps/api`
-- [ ] **[Backend]** Configure NestJS to run on port 3000
-- [ ] **[Backend]** Set up basic `AppModule`, `AppController`, and `AppService`
-- [ ] **[Backend]** Add health check endpoint (`GET /health`)
+- [X] **[Frontend]** Create Next.js 16 application inside `apps/web` using App Router
+- [X] **[Frontend]** Configure Next.js to run on port 3001
+- [X] **[Frontend]** Set up basic `app/layout.tsx` and `app/page.tsx`
+- [X] **[Backend]** Create NestJS application inside `apps/api`
+- [X] **[Backend]** Configure NestJS to run on port 3000
+- [X] **[Backend]** Set up basic `AppModule`, `AppController`, and `AppService`
+- [X] **[Backend]** Add health check endpoint (`GET /health`)
 
 ### Shared Packages
 
-- [ ] **[Shared]** Create `packages/database` with initial package.json
-- [ ] **[Shared]** Create `packages/types` with initial package.json
-- [ ] **[Shared]** Create `packages/ui` stub package with package.json
-- [ ] **[Shared]** Create `packages/eslint-config` with base, next, and nest configurations
-- [ ] **[Shared]** Create `packages/typescript-config` with base, nextjs, and nestjs configurations
-- [ ] **[Shared]** Configure all packages to use workspace protocol (`workspace:*`)
+- [X] **[Shared]** Create `packages/database` with initial package.json
+- [\] **[Shared]** Create `packages/types` with initial package.json
+- [X] **[Shared]** Create `packages/ui` stub package with package.json
+- [X] **[Shared]** Create `packages/eslint-config` with base, next, and nest configurations
+- [X] **[Shared]** Create `packages/typescript-config` with base, nextjs, and nestjs configurations
+- [X] **[Shared]** Configure all packages to use workspace protocol (`workspace:*`)
 
 ### Development Environment
 
-- [ ] **[Shared]** Create `.gitignore` at root with Node, IDE, and environment file exclusions
-- [ ] **[Shared]** Set up Prettier configuration for consistent code formatting
-- [ ] **[Shared]** Configure ESLint to work with Prettier
-- [ ] **[Shared]** Add pre-commit hooks with Husky for linting and formatting
-- [ ] **[Shared]** Create `.nvmrc` or `.node-version` file specifying Node >= 18
+- [X] **[Shared]** Create `.gitignore` at root with Node, IDE, and environment file exclusions
+- [\] **[Shared]** Set up Prettier configuration for consistent code formatting
+- [\] **[Shared]** Configure ESLint to work with Prettier
+- [\] **[Shared]** Add pre-commit hooks with Husky for linting and formatting
+- [X] **[Shared]** Create `.nvmrc` or `.node-version` file specifying Node >= 18
 
 ### Documentation
 
-- [ ] **[Shared]** Create root `README.md` with project overview and setup instructions
-- [ ] **[Shared]** Document common commands (dev, build, lint, test) in README
-- [ ] **[Shared]** Create `CONTRIBUTING.md` with development guidelines
-- [ ] **[Shared]** Set up `.env.example` files for both apps
+- [X] **[Shared]** Create root `README.md` with project overview and setup instructions
+- [X] **[Shared]** Document common commands (dev, build, lint, test) in README
+- [\] **[Shared]** Create `CONTRIBUTING.md` with development guidelines
+- [X] **[Shared]** Set up `.env.example` files for both apps
 
 ### CI/CD Pipeline
 
-- [ ] **[Infra]** Set up GitHub Actions workflow for CI
-- [ ] **[Infra]** Add job for dependency installation with pnpm caching
-- [ ] **[Infra]** Add job for linting across all workspaces
-- [ ] **[Infra]** Add job for type-checking across all workspaces
-- [ ] **[Infra]** Add job for building all apps and packages
-- [ ] **[Infra]** Configure CI to run on pull requests and main branch pushes
+- [\] **[Infra]** Set up GitHub Actions workflow for CI
+- [\] **[Infra]** Add job for dependency installation with pnpm caching
+- [\] **[Infra]** Add job for linting across all workspaces
+- [\] **[Infra]** Add job for type-checking across all workspaces
+- [\] **[Infra]** Add job for building all apps and packages
+- [\] **[Infra]** Configure CI to run on pull requests and main branch pushes
 
 ### Verification
 
-- [ ] **[QA]** Verify `pnpm install` works correctly
-- [ ] **[QA]** Verify `pnpm dev` starts both apps successfully
-- [ ] **[QA]** Verify `pnpm build` builds all workspaces without errors
-- [ ] **[QA]** Verify `pnpm lint` runs across all workspaces
-- [ ] **[QA]** Verify CI pipeline passes on a test commit
+- [\] **[QA]** Verify `pnpm install` works correctly
+- [\] **[QA]** Verify `pnpm dev` starts both apps successfully
+- [\] **[QA]** Verify `pnpm build` builds all workspaces without errors
+- [\] **[QA]** Verify `pnpm lint` runs across all workspaces
+- [\] **[QA]** Verify CI pipeline passes on a test commit
 
 ---
 
