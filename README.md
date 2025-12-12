@@ -5,7 +5,7 @@
 ## Documentation
 
 - [Specification](./docs/specification.md)
-- [Milestone Roadmap](./docs/milstones.md)
+- [Milestone Roadmap](./docs/milestones.md)
 - [Technical Stack](./docs/technical-stack.md)
 - [OnBoarding](./docs/onboarding.md)
 
