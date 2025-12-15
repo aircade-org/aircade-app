@@ -44,25 +44,31 @@ export class GameManager {
       this.config.backgroundColor ?? 0x87ceeb,
     );
 
-    // Use orthographic camera for 2D-like gameplay
-    // Scale the camera viewport to world units (aspect ratio matters!)
+    // Use perspective camera for 3D look with 45-degree rotation
     const width = this.config.width;
     const height = this.config.height;
     const aspectRatio = width / height;
 
-    // Game viewport: 20 units tall, scale width by aspect ratio
-    const viewHeight = 20;
-    const viewWidth = viewHeight * aspectRatio;
-
-    this.camera = new THREE.OrthographicCamera(
-      -viewWidth / 2,
-      viewWidth / 2,
-      viewHeight / 2,
-      -viewHeight / 2,
+    // Perspective camera with 45-degree FOV
+    this.camera = new THREE.PerspectiveCamera(
+      45,
+      aspectRatio,
       0.1,
-      1000,
+      10000,
     );
-    this.camera.position.z = 100;
+
+    // Position camera at an angle - rotated 45 degrees around the Y axis
+    // This creates an isometric-like view
+    const cameraDistance = 35;
+    const cameraHeight = 15;
+
+    // Place camera at 45 degrees (rotated around level center)
+    this.camera.position.x = cameraDistance * Math.sin(Math.PI / 4); // 45 degrees
+    this.camera.position.y = cameraHeight;
+    this.camera.position.z = cameraDistance * Math.cos(Math.PI / 4); // 45 degrees
+
+    // Look at center of level
+    this.camera.lookAt(0, 0, 0);
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     const pixelRatio = this.config.pixelRatio ?? (window.devicePixelRatio || 1);
@@ -266,14 +272,20 @@ export class GameManager {
    * Setup basic lighting
    */
   private setupLighting(): void {
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
     this.scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionalLight.position.set(10, 20, 10);
+    // Directional light from the camera angle for better 3D effect
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.9);
+    directionalLight.position.set(20, 30, 20);
     directionalLight.castShadow = true;
     directionalLight.shadow.mapSize.width = 2048;
     directionalLight.shadow.mapSize.height = 2048;
+    directionalLight.shadow.camera.left = -50;
+    directionalLight.shadow.camera.right = 50;
+    directionalLight.shadow.camera.top = 50;
+    directionalLight.shadow.camera.bottom = -50;
+    directionalLight.shadow.camera.far = 200;
     this.scene.add(directionalLight);
   }
 
@@ -282,21 +294,15 @@ export class GameManager {
    */
   private setupEventListeners(): void {
     const handleResize = () => {
-      if (!(this.camera instanceof THREE.OrthographicCamera)) return;
+      if (this.camera instanceof THREE.PerspectiveCamera) {
+        const width = this.config.width;
+        const height = this.config.height;
+        const aspectRatio = width / height;
 
-      const width = this.config.width;
-      const height = this.config.height;
-      const aspectRatio = width / height;
-
-      const viewHeight = 20;
-      const viewWidth = viewHeight * aspectRatio;
-
-      this.camera.left = -viewWidth / 2;
-      this.camera.right = viewWidth / 2;
-      this.camera.top = viewHeight / 2;
-      this.camera.bottom = -viewHeight / 2;
-      this.camera.updateProjectionMatrix();
-      this.renderer.setSize(width, height);
+        this.camera.aspect = aspectRatio;
+        this.camera.updateProjectionMatrix();
+      }
+      this.renderer.setSize(this.config.width, this.config.height);
     };
 
     window.addEventListener("resize", handleResize);

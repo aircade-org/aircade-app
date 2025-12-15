@@ -1,6 +1,13 @@
 import * as THREE from "three";
 import { GameEntity } from "@repo/game-engine";
 import { Transform, PhysicsBody, Collider } from "@repo/game-engine";
+import {
+  loadPlayerModel,
+  loadEnemyModel,
+  loadCoinModel,
+  loadFlagModel,
+  loadPlatformModel,
+} from "../utils/assetLoader";
 
 /**
  * Create Mario player entity
@@ -45,11 +52,18 @@ export async function createMarioPlayer(): Promise<GameEntity> {
     lives: 3,
   });
 
-  const geometry = new THREE.BoxGeometry(0.8, 1.6, 0.5);
-  const material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.castShadow = true;
-  mesh.receiveShadow = true;
+  let model = await loadPlayerModel();
+  let mesh: THREE.Object3D;
+  if (model) {
+    model.scale.set(1, 1, 1);
+    mesh = model;
+  } else {
+    const geometry = new THREE.BoxGeometry(0.8, 1.6, 0.5);
+    const material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+    mesh = new THREE.Mesh(geometry, material);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+  }
 
   player.addComponent("Mesh", { object3d: mesh });
 
@@ -93,18 +107,25 @@ export async function createPlatform(
   };
   platform.addComponent("Collider", collider);
 
-  const colors: Record<string, number> = {
-    grass: 0x2ecc71,
-    dirt: 0x8b4513,
-    brick: 0xcc5500,
-  };
-  const color = colors[type] || colors.grass;
+  let model = await loadPlatformModel(type);
+  let mesh: THREE.Object3D;
+  if (model) {
+    model.scale.set(width / 1, 1, 1);
+    mesh = model;
+  } else {
+    const colors: Record<string, number> = {
+      grass: 0x2ecc71,
+      dirt: 0x8b4513,
+      brick: 0xcc5500,
+    };
+    const color = colors[type] || colors.grass;
 
-  const geometry = new THREE.BoxGeometry(width, height, 1);
-  const material = new THREE.MeshStandardMaterial({ color });
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.castShadow = true;
-  mesh.receiveShadow = true;
+    const geometry = new THREE.BoxGeometry(width, height, 1);
+    const material = new THREE.MeshStandardMaterial({ color });
+    mesh = new THREE.Mesh(geometry, material);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+  }
 
   platform.addComponent("Mesh", { object3d: mesh });
 
@@ -148,11 +169,18 @@ export async function createCoin(x: number, y: number): Promise<GameEntity> {
     collected: false,
   });
 
-  const geometry = new THREE.CylinderGeometry(0.2, 0.2, 0.05, 32);
-  const material = new THREE.MeshStandardMaterial({ color: 0xffd700 });
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.castShadow = true;
-  mesh.receiveShadow = true;
+  let model = await loadCoinModel();
+  let mesh: THREE.Object3D;
+  if (model) {
+    model.scale.set(0.5, 0.5, 0.5);
+    mesh = model;
+  } else {
+    const geometry = new THREE.CylinderGeometry(0.2, 0.2, 0.05, 32);
+    const material = new THREE.MeshStandardMaterial({ color: 0xffd700 });
+    mesh = new THREE.Mesh(geometry, material);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+  }
 
   coin.addComponent("Mesh", { object3d: mesh });
 
@@ -200,11 +228,18 @@ export async function createEnemy(x: number, y: number): Promise<GameEntity> {
     isGrounded: false,
   });
 
-  const geometry = new THREE.BoxGeometry(0.6, 0.6, 0.5);
-  const material = new THREE.MeshStandardMaterial({ color: 0x8b0000 });
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.castShadow = true;
-  mesh.receiveShadow = true;
+  let model = await loadEnemyModel("enemy");
+  let mesh: THREE.Object3D;
+  if (model) {
+    model.scale.set(0.8, 0.8, 0.8);
+    mesh = model;
+  } else {
+    const geometry = new THREE.BoxGeometry(0.6, 0.6, 0.5);
+    const material = new THREE.MeshStandardMaterial({ color: 0x8b0000 });
+    mesh = new THREE.Mesh(geometry, material);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+  }
 
   enemy.addComponent("Mesh", { object3d: mesh });
 
@@ -244,23 +279,32 @@ export async function createFlag(x: number, y: number): Promise<GameEntity> {
 
   flag.addComponent("GoalState", { reached: false });
 
-  const group = new THREE.Group();
+  let model = await loadFlagModel();
+  let mesh: THREE.Object3D;
+  if (model) {
+    model.scale.set(1.2, 1.2, 1.2);
+    mesh = model;
+  } else {
+    const group = new THREE.Group();
 
-  const poleGeometry = new THREE.BoxGeometry(0.1, 3, 0.1);
-  const poleMaterial = new THREE.MeshStandardMaterial({ color: 0x8b4513 });
-  const pole = new THREE.Mesh(poleGeometry, poleMaterial);
-  pole.position.y = 1.5;
-  pole.castShadow = true;
-  group.add(pole);
+    const poleGeometry = new THREE.BoxGeometry(0.1, 3, 0.1);
+    const poleMaterial = new THREE.MeshStandardMaterial({ color: 0x8b4513 });
+    const pole = new THREE.Mesh(poleGeometry, poleMaterial);
+    pole.position.y = 1.5;
+    pole.castShadow = true;
+    group.add(pole);
 
-  const flagGeometry = new THREE.BoxGeometry(0.8, 0.5, 0.1);
-  const flagMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
-  const flagMesh = new THREE.Mesh(flagGeometry, flagMaterial);
-  flagMesh.position.set(0.4, 2.75, 0);
-  flagMesh.castShadow = true;
-  group.add(flagMesh);
+    const flagGeometry = new THREE.BoxGeometry(0.8, 0.5, 0.1);
+    const flagMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+    const flagMesh = new THREE.Mesh(flagGeometry, flagMaterial);
+    flagMesh.position.set(0.4, 2.75, 0);
+    flagMesh.castShadow = true;
+    group.add(flagMesh);
 
-  flag.addComponent("Mesh", { object3d: group });
+    mesh = group;
+  }
+
+  flag.addComponent("Mesh", { object3d: mesh });
 
   return flag;
 }
