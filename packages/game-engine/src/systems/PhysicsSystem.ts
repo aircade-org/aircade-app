@@ -97,38 +97,46 @@ export class PhysicsSystem implements GameSystem {
       // Update position
       transform.position.addScaledVector(body.velocity, deltaTime);
 
-      // Resolve collisions - push entity out of colliders
+      // Resolve collisions - push entity out of colliders (but not triggers)
       for (const collision of this.collisions) {
-        if (collision.entityA === entity.id && !this.gameManager.getEntity(collision.entityB as string)?.getComponent<PhysicsBody>("PhysicsBody")?.isKinematic === false) {
-          // Entity A collided with kinematic entity B (platform)
-          const otherEntity = this.gameManager.getEntity(collision.entityB as string);
-          if (otherEntity) {
-            const otherBody = otherEntity.getComponent<PhysicsBody>("PhysicsBody");
-            if (otherBody?.isKinematic) {
-              // Push entity out of platform
-              transform.position.addScaledVector(collision.normal, collision.penetration + 0.01);
+        // Get both entities and their colliders
+        const otherEntityA = this.gameManager.getEntity(collision.entityA as string);
+        const otherEntityB = this.gameManager.getEntity(collision.entityB as string);
 
-              // Stop velocity in collision direction if moving into it
-              const velocityIntoNormal = body.velocity.dot(collision.normal);
-              if (velocityIntoNormal < 0) {
-                body.velocity.addScaledVector(collision.normal, -velocityIntoNormal);
-              }
+        if (!otherEntityA || !otherEntityB) continue;
+
+        const colliderA = otherEntityA.getComponent<Collider>("Collider");
+        const colliderB = otherEntityB.getComponent<Collider>("Collider");
+
+        if (!colliderA || !colliderB) continue;
+
+        // Skip trigger collisions - they only emit events, don't resolve physics
+        if (colliderA.isTrigger || colliderB.isTrigger) continue;
+
+        if (collision.entityA === entity.id) {
+          // Entity A collided with kinematic entity B (platform)
+          const otherBody = otherEntityB.getComponent<PhysicsBody>("PhysicsBody");
+          if (otherBody?.isKinematic) {
+            // Push entity out of platform
+            transform.position.addScaledVector(collision.normal, collision.penetration + 0.01);
+
+            // Stop velocity in collision direction if moving into it
+            const velocityIntoNormal = body.velocity.dot(collision.normal);
+            if (velocityIntoNormal < 0) {
+              body.velocity.addScaledVector(collision.normal, -velocityIntoNormal);
             }
           }
-        } else if (collision.entityB === entity.id && !this.gameManager.getEntity(collision.entityA as string)?.getComponent<PhysicsBody>("PhysicsBody")?.isKinematic === false) {
+        } else if (collision.entityB === entity.id) {
           // Entity B collided with kinematic entity A (platform)
-          const otherEntity = this.gameManager.getEntity(collision.entityA as string);
-          if (otherEntity) {
-            const otherBody = otherEntity.getComponent<PhysicsBody>("PhysicsBody");
-            if (otherBody?.isKinematic) {
-              // Push entity out of platform (opposite direction)
-              transform.position.addScaledVector(collision.normal, -(collision.penetration + 0.01));
+          const otherBody = otherEntityA.getComponent<PhysicsBody>("PhysicsBody");
+          if (otherBody?.isKinematic) {
+            // Push entity out of platform (opposite direction)
+            transform.position.addScaledVector(collision.normal, -(collision.penetration + 0.01));
 
-              // Stop velocity in collision direction if moving into it
-              const velocityIntoNormal = body.velocity.dot(collision.normal);
-              if (velocityIntoNormal > 0) {
-                body.velocity.addScaledVector(collision.normal, -velocityIntoNormal);
-              }
+            // Stop velocity in collision direction if moving into it
+            const velocityIntoNormal = body.velocity.dot(collision.normal);
+            if (velocityIntoNormal > 0) {
+              body.velocity.addScaledVector(collision.normal, -velocityIntoNormal);
             }
           }
         }
