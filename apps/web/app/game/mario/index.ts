@@ -5,7 +5,7 @@ import { initializeMarioLevel } from "./level";
 /**
  * Initialize and create Mario game
  */
-export function createMarioGame(container: HTMLElement): GameManager {
+export async function createMarioGame(container: HTMLElement): Promise<GameManager> {
   const config: GameConfig = {
     canvasContainer: container,
     width: window.innerWidth,
@@ -16,8 +16,8 @@ export function createMarioGame(container: HTMLElement): GameManager {
 
   const gameManager = new GameManager(config);
 
-  // Initialize Mario level
-  initializeMarioLevel(gameManager);
+  // Initialize Mario level asynchronously
+  await initializeMarioLevel(gameManager);
 
   return gameManager;
 }

@@ -8,51 +8,82 @@ export default function DemoGame() {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const gameManagerRef = useRef<GameManager | null>(null);
   const [gameState, setGameState] = useState({ score: 0, lives: 3 });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const mount = mountRef.current;
     if (!mount) return;
 
     // Create and start the Mario game
-    const gameManager = createMarioGame(mount);
-    gameManagerRef.current = gameManager;
+    (async () => {
+      try {
+        const gameManager = await createMarioGame(mount);
+        gameManagerRef.current = gameManager;
 
-    startMarioGame(gameManager);
+        startMarioGame(gameManager);
+        setIsLoading(false);
 
-    // Listen for game events
-    const eventBus = gameManager.getEventBus();
-    eventBus.on("levelComplete", () => {
-      console.log("Level completed!");
-    });
+        // Listen for game events
+        const eventBus = gameManager.getEventBus();
+        eventBus.on("levelComplete", () => {
+          console.log("Level completed!");
+        });
 
-    eventBus.on("gameOver", () => {
-      console.log("Game over!");
-    });
+        eventBus.on("gameOver", () => {
+          console.log("Game over!");
+        });
 
-    // Update UI with game state
-    const updateInterval = setInterval(() => {
-      const entities = gameManager.getEntities();
-      const player = entities.find((e) => e.name === "Mario");
-      if (player) {
-        const state = player.getComponent<any>("PlayerState");
-        if (state) {
-          setGameState({ score: state.score, lives: state.lives });
-        }
+        // Update UI with game state
+        const updateInterval = setInterval(() => {
+          const entities = gameManager.getEntities();
+          const player = entities.find((e) => e.name === "Mario");
+          if (player) {
+            const state = player.getComponent<any>("PlayerState");
+            if (state) {
+              setGameState({ score: state.score, lives: state.lives });
+            }
+          }
+        }, 100);
+
+        // Cleanup on unmount
+        return () => {
+          clearInterval(updateInterval);
+          destroyMarioGame(gameManager);
+          gameManagerRef.current = null;
+        };
+      } catch (error) {
+        console.error("Failed to initialize game:", error);
+        setIsLoading(false);
       }
-    }, 100);
-
-    // Cleanup on unmount
-    return () => {
-      clearInterval(updateInterval);
-      destroyMarioGame(gameManager);
-      gameManagerRef.current = null;
-    };
+    })();
   }, []);
 
   return (
     <div style={{ width: "100%", height: "100vh", position: "relative" }}>
       {/* Game canvas */}
       <div style={{ width: "100%", height: "100%", position: "relative" }} ref={mountRef} />
+
+      {/* Loading screen */}
+      {isLoading && (
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 100,
+            color: "white",
+            fontSize: "24px",
+          }}
+        >
+          Loading 3D Assets...
+        </div>
+      )}
 
       {/* HUD - Score and Lives */}
       <div
