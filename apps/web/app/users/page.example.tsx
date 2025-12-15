@@ -15,7 +15,7 @@ export default async function UsersPage() {
           <li key={user.id}>
             <h2>{user.name}</h2>
             <p>{user.email}</p>
-            <p>Posts: {user.posts.length}</p>
+            {/* <p>Posts: {user.posts.length}</p> */}
           </li>
         ))}
       </ul>
