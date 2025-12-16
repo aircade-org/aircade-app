@@ -9,7 +9,7 @@ export async function createMarioPlayer(): Promise<GameEntity> {
   const player = new GameEntity("Mario");
 
   const transform: Transform = {
-    position: new THREE.Vector3(0, -8, 0),
+    position: new THREE.Vector3(-13, -0, 0),
     rotation: new THREE.Euler(0, 0, 0),
     scale: new THREE.Vector3(1, 1, 1),
   };
