@@ -2,5 +2,12 @@
   "name": "@repo/prettier-config",
   "version": "0.0.0",
   "license": "MIT or Apache-2.0",
-  "private": true
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./prettier.config.js"
+  },
+  "dependencies": {
+    "prettier": "^3.7.4"
+  }
 }

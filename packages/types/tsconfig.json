@@ -1,0 +1,9 @@
+{
+  "extends": "@repo/typescript-config/library",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist"
+  },
+  "include": ["src", "prisma.config.ts"],
+  "exclude": ["node_modules", "dist", "generated"]
+}

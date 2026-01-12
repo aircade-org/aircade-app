@@ -3,7 +3,11 @@
   "version": "0.0.0",
   "license": "MIT or Apache-2.0",
   "private": true,
-  "publishConfig": {
-    "access": "public"
+  "exports": {
+    "./base": "./base.json",
+    "./next": "./next.json",
+    "./nest": "./nest.json",
+    "./react-library": "./react-library.json",
+    "./library": "./library.json"
   }
 }
