@@ -1,11 +1,12 @@
 {
   "name": "api",
   "version": "0.0.1",
+  "license": "MIT or Apache-2.0",
   "description": "",
   "author": "",
   "private": true,
-  "license": "UNLICENSED",
   "scripts": {
+    "dev": "nest start --watch",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
